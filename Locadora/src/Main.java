@@ -13,6 +13,8 @@ public class Main {
             System.out.println("1 - Cadastrar novo cliente");
             System.out.println("2 - Listar clientes");
             System.out.println("3 - Atualizar cliente");
+            System.out.println("4 - Consutar cliente por CPF");
+            System.out.println("5 - Listar clientes por filtro (nome ou cpf)");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine();
@@ -43,6 +45,27 @@ public class Main {
                     System.out.print("Novo nome do cliente: ");
                     String novoNome = scanner.nextLine();
                     clienteService.atualizarCliente(cpfAtualizar, novoNome);
+                    break;
+                case "4":
+                    System.out.print("Informa o CPF do cliente a ser buscado: ");
+                    String cpfPesquisa = scanner.nextLine();
+                    Cliente resultado = clienteService.buscarClientePorCpf(cpfPesquisa);
+                    if (resultado != null){
+                        System.out.println("Cliente encontrado: ");
+                        System.out.println("Nome: "+ resultado.getNome());
+                        System.out.println("CPF: " + resultado.getCpf());
+                    } else {
+                        System.out.println("- Cliente não encontrado.");
+                    }
+                    break;
+                case "5":
+                    System.out.println("Informe o termo de busca (ou pressione Enter para ver todo)");
+                    String termo = scanner.nextLine();
+                    if (termo.isEmpty()){
+                        clienteService.listarClientes(); //lista tudo que tem
+                    } else {
+                        clienteService.listarClientesComFiltros(termo);
+                    }
                     break;
                 case "0":
                     System.out.println("Encerrando...");

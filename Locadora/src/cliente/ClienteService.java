@@ -59,6 +59,37 @@ public class ClienteService {
         } else {
             System.out.println("Cliente com CPF " + cpfBuscado + " não encontrado.");
         }
-}
+    }
+
+    public Cliente buscarClientePorCpf(String cpfBuscado) {
+        List<Cliente> clientes = listarClientes();
+
+        for (Cliente cliente : clientes) {
+            if (cliente.getCpf().equals(cpfBuscado)) {
+                return cliente;
+            }
+        }
+
+        return null; // Se não encontrar
+    }
+
+    public void listarClientesComFiltros(String buscaEmQuestao){
+        List<Cliente> clientes = listarClientes();
+        boolean encontrou = false; 
+
+        for (Cliente cliente : clientes){
+            if ( cliente.getNome().toLowerCase().contains(buscaEmQuestao.toLowerCase()) || cliente.getCpf().contains(buscaEmQuestao)) {
+                System.out.println("Nome: " + cliente.getNome());
+                System.out.println("CPF: " + cliente.getCpf());
+                System.out.println("---------------------");
+                encontrou = true;    
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhum cliente encontrado com o termo informado.");
+    }
+    }
+
 
 }
