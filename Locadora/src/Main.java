@@ -1,5 +1,8 @@
+import aluguel.AluguelService;
 import cliente.Cliente;
 import cliente.ClienteService;
+import item.Item;
+import item.ItemService;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,14 +10,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ClienteService clienteService = new ClienteService();
-
+        ItemService itemService = new ItemService();
+        AluguelService aluguelService = new AluguelService();
         while (true) {
-            System.out.println("\n===== MENU LOCADORA =====");
+            System.out.println("\n======== MENU LOCADORA ========");
             System.out.println("1 - Cadastrar novo cliente");
             System.out.println("2 - Listar clientes");
             System.out.println("3 - Atualizar cliente");
             System.out.println("4 - Consutar cliente por CPF");
             System.out.println("5 - Listar clientes por filtro (nome ou cpf)");
+            System.out.println("6 - Cadastrar novo item para locação");
+            System.out.println("7 - Atualizar item existente");
+            System.out.println("8 - Remover item existente");
+            System.out.println("9 - Registrar aluguel de item");
+            System.out.println("10 - Listar todos os filmes");
+            System.out.println("11 - Alterar status de item");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine();
@@ -66,6 +76,40 @@ public class Main {
                     } else {
                         clienteService.listarClientesComFiltros(termo);
                     }
+                    break;
+                case "6":
+                    System.out.print("Código do item: ");
+                    int codigo = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Título do item: ");
+                    String titulo = scanner.nextLine();
+
+                    System.out.print("Gênero: ");
+                    String genero = scanner.nextLine();
+
+                    System.out.print("Tipo (Filme/Série/Desenho): ");
+                    String tipo = scanner.nextLine();
+
+                    System.out.print("Preço por dia (ex: 4.99): ");
+                    double preco = Double.parseDouble(scanner.nextLine());
+
+                    Item item = new Item(codigo, titulo, genero, tipo, preco);
+                    itemService.adicionarItem(item);
+                    break;
+                case "7":
+                    itemService.atualizarItem(scanner);
+                    break;    
+                case "8":
+                    itemService.removerItemPorCodigo(scanner);
+                    break;
+                case "9":
+                    aluguelService.registrarAluguel(scanner);
+                    break;
+                case "10":
+                    itemService.listarFilmes();
+                    break;
+                case "11":
+                    itemService.alterarStatusItem(scanner);
                     break;
                 case "0":
                     System.out.println("Encerrando...");

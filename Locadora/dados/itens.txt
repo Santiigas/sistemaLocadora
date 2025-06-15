@@ -1,0 +1,4 @@
+1;John Wick 4;Acao;Filme;;5.0
+2;Bastardos Inglorios;Faroeste;Filme;;2.0
+3;Os oito odiados;Faroeste;Filme;;6.0
+4;Django Livre;Faoreste;Filme;;9.0
