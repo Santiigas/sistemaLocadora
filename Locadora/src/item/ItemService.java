@@ -134,53 +134,31 @@ public class ItemService {
             System.out.println("Nenhum filme encontrado.");
         }
     }
+    
+    public void buscarItens(Scanner scanner) {
+    List<Item> itens = listarItens();
 
-    public void alterarStatusItem(Scanner scanner) {
-        List<Item> itens = listarItens();
+    System.out.println("=== Buscar Itens ===");
+    System.out.print("Digite um termo (título, gênero ou tipo): ");
+    String termo = scanner.nextLine().toLowerCase();
 
-        System.out.println("=== Alterar Status de Item ===");
-        System.out.print("Digite o código do item: ");
-        int codigo = Integer.parseInt(scanner.nextLine());
+    boolean encontrou = false;
 
-        boolean encontrado = false;
+    for (Item item : itens) {
+        if (item.getTitulo().toLowerCase().contains(termo) ||
+            item.getGenero().toLowerCase().contains(termo) ||
+            item.getTipo().toLowerCase().contains(termo)) {
 
-        for (Item item : itens) {
-            if (item.getCodigo() == codigo) {
-                encontrado = true;
-
-                System.out.println("Item encontrado:");
-                System.out.println(item);
-
-                System.out.println("Status atual: " + item.getStatus());
-                System.out.print("Novo status (disponível, alugado ou manutenção): ");
-                String novoStatus = scanner.nextLine().toLowerCase();
-
-                if (!novoStatus.equals("disponível") && !novoStatus.equals("alugado") && !novoStatus.equals("manutenção")) {
-                    System.out.println("Status inválido.");
-                    return;
-                }
-
-                item.setStatus(novoStatus);
-                break;
-            }
-        }
-
-        if (!encontrado) {
-            System.out.println("Item com esse código não encontrado.");
-            return;
-        }
-
-        // Regravar os dados no arquivo
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CAMINHO))) {
-            for (Item item : itens) {
-                writer.write(item.toString());
-                writer.newLine();
-            }
-            System.out.println("Status atualizado com sucesso!");
-        } catch (IOException e) {
-            System.out.println("Erro ao atualizar o status: " + e.getMessage());
+            System.out.println(item);
+            encontrou = true;
         }
     }
+
+    if (!encontrou) {
+        System.out.println("Nenhum item encontrado com esse termo.");
+    }
+}
+
 
 
 

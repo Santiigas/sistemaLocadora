@@ -2,3 +2,4 @@
 2;Bastardos Inglorios;Faroeste;Filme;;2.0
 3;Os oito odiados;Faroeste;Filme;;6.0
 4;Django Livre;Faoreste;Filme;;9.0
+5;7 homens e 1 destino ;A��o Faroeste ;Filme;;5.0

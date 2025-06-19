@@ -24,7 +24,10 @@ public class Main {
             System.out.println("8 - Remover item existente");
             System.out.println("9 - Registrar aluguel de item");
             System.out.println("10 - Listar todos os filmes");
-            System.out.println("11 - Alterar status de item");
+            System.out.println("11 - Buscar item por título, gênero ou tipo");
+            System.out.println("12 - Listar locações ativas");
+            System.out.println("13 - Listar locações com devolução em atraso");
+            System.out.println("14 - Calcular multa por atraso");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine();
@@ -109,7 +112,16 @@ public class Main {
                     itemService.listarFilmes();
                     break;
                 case "11":
-                    itemService.alterarStatusItem(scanner);
+                    itemService.buscarItens(scanner);
+                    break;
+                case "12":
+                    aluguelService.listarLocacoesAtivas();
+                    break;
+                case "13":
+                    aluguelService.listarLocacoesAtrasadas();
+                    break;
+                case "14":
+                    aluguelService.calcularMultaPorAtraso(scanner);
                     break;
                 case "0":
                     System.out.println("Encerrando...");

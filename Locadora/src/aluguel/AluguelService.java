@@ -49,4 +49,80 @@ public class AluguelService {
 
         return lista;
     }
+
+
+    public void listarLocacoesAtivas() {
+        List<Aluguel> alugueis = listarAlugueis();
+        LocalDate hoje = LocalDate.now();
+
+        System.out.println("=== Locações Ativas ===");
+        boolean encontrou = false;
+
+        for (Aluguel aluguel : alugueis) {
+            LocalDate devolucaoPrevista = aluguel.getDataAluguel().plusDays(aluguel.getDias());
+
+            if (!hoje.isAfter(devolucaoPrevista)) {
+                System.out.println(aluguel);
+                encontrou = true;
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhuma locação ativa no momento.");
+        }
+    }
+
+    public void listarLocacoesAtrasadas() {
+        List<Aluguel> alugueis = listarAlugueis();
+        LocalDate hoje = LocalDate.now();
+
+        System.out.println("=== Locações em Atraso ===");
+        boolean encontrou = false;
+
+        for (Aluguel aluguel : alugueis) {
+            LocalDate dataDevolucao = aluguel.getDataAluguel().plusDays(aluguel.getDias());
+
+            if (hoje.isAfter(dataDevolucao)) {
+                System.out.println(aluguel);
+                encontrou = true;
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhuma locação em atraso.");
+        }
+    }
+
+    public void calcularMultaPorAtraso(Scanner scanner) {
+        List<Aluguel> alugueis = listarAlugueis();
+        LocalDate hoje = LocalDate.now();
+
+        System.out.println("=== Calcular Multa por Atraso ===");
+
+        System.out.print("Informe o código do item: ");
+        int codigoItem = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Informe o CPF do cliente: ");
+        String cpf = scanner.nextLine();
+
+        for (Aluguel aluguel : alugueis) {
+            if (aluguel.getCodigoItem() == codigoItem && aluguel.getCpfCliente().equals(cpf)) {
+                LocalDate dataDevolucao = aluguel.getDataAluguel().plusDays(aluguel.getDias());
+
+                if (hoje.isAfter(dataDevolucao)) {
+                    long diasAtraso = java.time.temporal.ChronoUnit.DAYS.between(dataDevolucao, hoje);
+                    double multa = diasAtraso * 2.0;
+                    System.out.printf("Locação está em atraso (%d dias). Multa: R$ %.2f\n", diasAtraso, multa);
+                } else {
+                    System.out.println("Essa locação ainda está no prazo. Nenhuma multa.");
+                }
+                return;
+            }
+        }
+
+        System.out.println("Locação não encontrada.");
+    }
+
+
+
 }
